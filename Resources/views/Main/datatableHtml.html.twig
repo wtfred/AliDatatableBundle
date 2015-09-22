@@ -9,7 +9,9 @@
                 <th width="1%" ><input type="checkbox" name="datatable_action_all" /></th>
             {% endif %}
             {% for label,key in fields %}
-                {% if label != '_identifier_' %}
+                {% if label == '_selectall_' %}
+                    <th width="1%" ><input type="checkbox" title="Cocher tout / Décocher tout" class="check-all" data-checkbox_name="{{ key|split('.')[0] }}[selected][]"></th>
+                {% elseif label != '_identifier_' %}
                     <th>{{ label }}</th>
                 {% endif %}
             {% endfor %}

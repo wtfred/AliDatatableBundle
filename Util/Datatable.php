@@ -34,6 +34,9 @@ class Datatable
 
     /** @var array */
     protected $_multiple;
+    
+    /** @var boolean */
+    protected $_select_all = false;
 
     /** @var \Ali\DatatableBundle\Util\Factory\Query\QueryInterface */
     protected $_queryBuilder;
@@ -586,6 +589,29 @@ class Datatable
     public function setMultiple(array $multiple)
     {
         $this->_multiple = $multiple;
+        return $this;
+    }
+    
+    /**
+     * get select_all
+     * 
+     * @return array
+     */
+    public function getSelectAll()
+    {
+        return $this->_select_all;
+    }
+
+    /**
+     * set select_all
+     * 
+     * @param type $select_all
+     * 
+     * @return Datatable
+     */
+    public function setSelectAll($select_all)
+    {
+        $this->_select_all = $select_all;
         return $this;
     }
 
