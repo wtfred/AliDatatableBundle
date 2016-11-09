@@ -2,9 +2,10 @@
 
 namespace Ali\DatatableBundle\Twig\Extension;
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ali\DatatableBundle\Util\Datatable;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class AliDatatableExtension extends \Twig_Extension
 {
@@ -13,9 +14,9 @@ class AliDatatableExtension extends \Twig_Extension
     protected $_container;
 
     /**
-     * class constructor 
-     * 
-     * @param ContainerInterface $container 
+     * class constructor
+     *
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -36,9 +37,9 @@ class AliDatatableExtension extends \Twig_Extension
 
     /**
      * Converts a string to time
-     * 
+     *
      * @param string $string
-     * @return int 
+     * @return int
      */
     public function datatable($options)
     {
@@ -59,7 +60,7 @@ class AliDatatableExtension extends \Twig_Extension
         $options['search_fields'] = $dt->getSearchFields();
         $options['multiple']      = $dt->getMultiple();
         $options['sort']          = is_null($dt->getOrderField()) ? NULL : array(array_search(
-                    $dt->getOrderField(), array_values($dt->getFields())), $dt->getOrderType());
+            $dt->getOrderField(), array_values($dt->getFields())), $dt->getOrderType());
         $main_template            = 'AliDatatableBundle:Main:index.html.twig';
         if (isset($options['main_template']))
         {
@@ -67,16 +68,16 @@ class AliDatatableExtension extends \Twig_Extension
         }
 
         return $this->_container
-                        ->get('templating')
-                        ->render(
-                                $main_template, $options);
+            ->get('templating')
+            ->render(
+                $main_template, $options);
     }
-    
+
     /**
      * Converts a string to time
-     * 
+     *
      * @param string $string
-     * @return int 
+     * @return int
      */
     public function datatableJs($options)
     {
@@ -100,7 +101,7 @@ class AliDatatableExtension extends \Twig_Extension
         $options['hidden_fields']           = $dt->getHiddenFields();
         $options['multiple']                = $dt->getMultiple();
         $options['sort']                    = is_null($dt->getOrderField()) ? NULL : [array_search(
-                    $dt->getOrderField(), array_values($dt->getFields())), $dt->getOrderType()];
+            $dt->getOrderField(), array_values($dt->getFields())), $dt->getOrderType()];
         $main_template            = 'AliDatatableBundle:Main:datatableJs.html.twig';
         if (isset($options['js_template']))
         {
@@ -108,16 +109,16 @@ class AliDatatableExtension extends \Twig_Extension
         }
 
         return $this->_container
-                        ->get('templating')
-                        ->render(
-                                $main_template, $options);
+            ->get('templating')
+            ->render(
+                $main_template, $options);
     }
-    
+
     /**
      * Converts a string to time
-     * 
+     *
      * @param string $string
-     * @return int 
+     * @return int
      */
     public function datatableHtml($options)
     {
@@ -145,34 +146,34 @@ class AliDatatableExtension extends \Twig_Extension
         }
 
         return $this->_container
-                        ->get('templating')
-                        ->render(
-                                $main_template, $options);
+            ->get('templating')
+            ->render(
+                $main_template, $options);
     }
 
     /**
      * create delete form
-     * 
+     *
      * @param type $id
-     * @return type 
+     * @return type
      */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm();
+            ->add('id', HiddenType::class)
+            ->getForm();
     }
 
     /**
      * create form builder
-     * 
+     *
      * @param type $data
      * @param array $options
-     * @return type 
+     * @return type
      */
     public function createFormBuilder($data = null, array $options = array())
     {
-        return $this->_container->get('form.factory')->createBuilder('form', $data, $options);
+        return $this->_container->get('form.factory')->createBuilder(FormType::class, $data, $options);
     }
 
     /**
